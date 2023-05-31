@@ -1,19 +1,9 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <div style="max-width: 400px">
+    <div style="max-width: 500px">
       <h1>Cadastre-se</h1>
-      <q-input
-        filled
-        v-model="user"
-        label="Nome de usuário"
-        class="q-mb-sm"
-      />
-      <q-input
-        filled
-        v-model="email"
-        label="E-mail"
-        class="q-mb-sm"
-      />
+      <q-input filled v-model="user" label="Nome de usuário" class="q-mb-sm" />
+      <q-input filled v-model="email" label="E-mail" class="q-mb-sm" />
 
       <q-input
         filled
@@ -40,17 +30,21 @@
       >
         <template v-slot:append>
           <q-icon
-            :name="isPasswordConfirmationHidden ? 'visibility_off' : 'visibility'"
+            :name="
+              isPasswordConfirmationHidden ? 'visibility_off' : 'visibility'
+            "
             class="cursor-pointer"
             color="primary"
-            @click="isPasswordConfirmationHidden = !isPasswordConfirmationHidden"
+            @click="
+              isPasswordConfirmationHidden = !isPasswordConfirmationHidden
+            "
           />
         </template>
       </q-input>
 
       <q-btn color="primary" label="Criar conta" class="full-width q-mb-md" />
       <p class="text-center">
-        <a href="/">Voltar</a>
+        <router-link to="/">Voltar</router-link>
       </p>
     </div>
   </q-page>

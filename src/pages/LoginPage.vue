@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <div style="max-width: 400px">
+    <div style="max-width: 500px">
       <h1>Acesse sua conta</h1>
       <q-input
         filled
@@ -25,9 +25,14 @@
         </template>
       </q-input>
 
-      <q-btn color="primary" label="Entrar" class="full-width q-mb-md" />
+      <q-btn
+        to="/encontre-uma-obra"
+        color="primary"
+        label="Entrar"
+        class="full-width q-mb-md"
+      />
       <p class="text-center">
-        <a href="#/cadastro">Esqueceu sua senha?</a>
+        <router-link to="/cadastro">Esqueceu sua senha?</router-link>
       </p>
     </div>
   </q-page>

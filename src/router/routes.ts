@@ -12,6 +12,20 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', component: () => import('pages/SignupPage.vue') }],
   },
   {
+    path: '/encontre-uma-obra',
+    component: () => import('layouts/PublicLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/FindPublicWorks.vue') },
+    ],
+  },
+  {
+    path: '/obra-exemplo',
+    component: () => import('layouts/PublicLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/PublicWorksDetails.vue') },
+    ],
+  },
+  {
     path: '/example',
     component: () => import('layouts/ExampleLayout.vue'),
     children: [{ path: '', component: () => import('pages/ExamplePage.vue') }],
