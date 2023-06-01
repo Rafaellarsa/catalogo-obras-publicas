@@ -91,7 +91,7 @@ export default defineComponent({
   top: 1rem
   left: 1rem
   z-index: 1
-  background-color: rgba(255, 255, 255, 0.8)
+  // background-color: rgba(255, 255, 255, 0.8)
 
 .page-title
   position: absolute
