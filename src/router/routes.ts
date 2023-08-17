@@ -4,12 +4,12 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/PublicLayout.vue'),
-    children: [{ path: '', component: () => import('pages/LoginPage.vue') }],
+    children: [{ path: '', component: () => import('pages/LogIn.vue') }],
   },
   {
     path: '/cadastro',
     component: () => import('layouts/PublicLayout.vue'),
-    children: [{ path: '', component: () => import('pages/SignupPage.vue') }],
+    children: [{ path: '', component: () => import('pages/SignUp.vue') }],
   },
   {
     path: '/encontre-uma-obra',
