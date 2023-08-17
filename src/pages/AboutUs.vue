@@ -1,12 +1,16 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <h1>Sobre nós</h1>
-    <h2>Orientadores</h2>
-    <h3>Leonardo Moreira</h3>
-    <h4>email@email.com</h4>
-    <h2>Orientanda</h2>
-    <h3>Rafaella Sampaio de Alencar</h3>
-    <h4>rafaellasalencar@gmail.com</h4>
+  <q-page>
+    <div style="max-width: 500px" class="q-pa-md q-mx-auto">
+      <h1>Sobre nós</h1>
+      <h2>Orientadores</h2>
+      <h3>Leonardo O. Moreira</h3>
+      <h4>leoomoreira@virtual.ufc.br</h4>
+      <h3>Gabriel A. L. Paillard</h3>
+      <h4>gabriel@virtual.ufc.br</h4>
+      <h2>Orientanda</h2>
+      <h3>Rafaella Sampaio de Alencar</h3>
+      <h4>rafaellasalencar@gmail.com</h4>
+    </div>
   </q-page>
 </template>
 
@@ -27,11 +31,13 @@ h3
   line-height: 1.5rem
   font-weight: 700
   width: 100%
+  margin-bottom: 0.5rem
 
 h4
-  font-size: 1.25rem
-  line-height: 1.5rem
+  font-size: 1rem
+  line-height: 1.25rem
   font-style: italic
   font-weight: 400
   width: 100%
+  margin-top: 0.5rem
 </style>
