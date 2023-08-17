@@ -51,6 +51,21 @@ const linksList = [
     link: '/encontre-uma-obra',
   },
   {
+    title: 'Adicionar obra',
+    icon: 'add',
+    link: '/nova-obra',
+  },
+  {
+    title: 'Sobre nós',
+    icon: 'info',
+    link: '/sobre',
+  },
+  {
+    title: 'Configurações',
+    icon: 'settings',
+    link: '/configuracoes',
+  },
+  {
     title: 'Sair',
     icon: 'logout',
     link: '/',

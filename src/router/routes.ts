@@ -26,6 +26,23 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/nova-obra',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/NewPublicWorks.vue') },
+    ],
+  },
+  {
+    path: '/sobre',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/AboutUs.vue') }],
+  },
+  {
+    path: '/configuracoes',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/UserSettings.vue') }],
+  },
+  {
     path: '/example',
     component: () => import('layouts/ExampleLayout.vue'),
     children: [{ path: '', component: () => import('pages/ExamplePage.vue') }],

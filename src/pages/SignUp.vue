@@ -54,7 +54,7 @@
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-  name: 'LoginPage',
+  name: 'SignUp',
   setup() {
     return {
       user: ref(''),
