@@ -11,7 +11,7 @@
         label="Reescreva sua senha"
       />
 
-      <q-btn color="primary" label="Criar conta" class="full-width q-mb-md" />
+      <q-btn color="primary" label="Criar conta" class="full-width q-my-md" />
       <p class="text-center">
         <router-link to="/">Voltar</router-link>
       </p>

@@ -14,7 +14,7 @@
         to="/encontre-uma-obra"
         color="primary"
         label="Entrar"
-        class="full-width q-mb-md"
+        class="full-width q-my-md"
       />
       <p class="text-center">
         <router-link to="/">Esqueceu sua senha?</router-link>

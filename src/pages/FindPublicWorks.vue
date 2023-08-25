@@ -35,9 +35,6 @@ export default defineComponent({
   name: 'FindPublicWorks',
   setup() {
     return {
-      user: ref(''),
-      password: ref(''),
-      isPasswordHidden: ref(true),
       publicWorks: ref([
         {
           title: 'Por estado',
@@ -74,6 +71,5 @@ export default defineComponent({
   width: 100%
   border-radius: 0
   margin-right: 0.75rem
-  // max-width: 250px
   cursor: pointer
 </style>
