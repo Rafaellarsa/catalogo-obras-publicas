@@ -8,22 +8,7 @@
         label="Nome de usuário ou e-mail"
         class="q-mb-sm"
       />
-      <q-input
-        filled
-        v-model="password"
-        :type="isPasswordHidden ? 'password' : 'text'"
-        label="Senha"
-        class="q-mb-md"
-      >
-        <template v-slot:append>
-          <q-icon
-            :name="isPasswordHidden ? 'visibility_off' : 'visibility'"
-            class="cursor-pointer"
-            color="primary"
-            @click="isPasswordHidden = !isPasswordHidden"
-          />
-        </template>
-      </q-input>
+      <password-input v-model="password" />
 
       <q-btn
         to="/encontre-uma-obra"
@@ -32,22 +17,33 @@
         class="full-width q-mb-md"
       />
       <p class="text-center">
-        <router-link to="/cadastro">Esqueceu sua senha?</router-link>
+        <router-link to="/">Esqueceu sua senha?</router-link>
       </p>
+
+      <p class="text-center">ou</p>
+
+      <q-btn
+        to="/cadastro"
+        color="primary"
+        outline
+        label="Criar nova conta"
+        class="full-width"
+      />
     </div>
   </q-page>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import PasswordInput from 'src/components/PasswordInput.vue';
 
 export default defineComponent({
   name: 'LogIn',
+  components: { PasswordInput },
   setup() {
     return {
       user: ref(''),
       password: ref(''),
-      isPasswordHidden: ref(true),
     };
   },
 });
