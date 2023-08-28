@@ -17,7 +17,7 @@
         class="full-width q-my-md"
       />
       <p class="text-center">
-        <router-link to="/">Esqueceu sua senha?</router-link>
+        <router-link to="/recuperar-senha">Esqueceu sua senha?</router-link>
       </p>
 
       <p class="text-center">ou</p>
