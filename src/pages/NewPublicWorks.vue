@@ -8,9 +8,11 @@
         v-model="location"
         label="Selecionar localização"
         class="q-mb-sm"
-      />
-
-      <h3>Obras próximas</h3>
+      >
+        <template v-slot:append>
+          <q-icon name="place" />
+        </template>
+      </q-input>
 
       <h3>Dados da obra</h3>
 
@@ -39,7 +41,6 @@
         v-model="startDate"
         label="Data de início"
         mask="##/##/####"
-        :rules="['date']"
         class="q-mb-sm"
       >
         <template v-slot:append>
@@ -59,7 +60,6 @@
         v-model="deadline"
         label="Prazo da obra"
         mask="##/##/####"
-        :rules="['date']"
         class="q-mb-sm"
       >
         <template v-slot:append>
@@ -79,6 +79,27 @@
 
       <h3>Galeria da obra</h3>
 
+      <q-file
+        filled
+        v-model="image"
+        label="Adicione imagens..."
+        @update:model-value="handleUpload()"
+      />
+
+      <q-img
+        :src="imageUrl"
+        spinner-color="white"
+        style="height: 60px; max-width: 60px"
+      />
+
+      <q-input
+        filled
+        v-model="description"
+        label="Descrição"
+        type="textarea"
+        class="q-mb-md"
+      />
+
       <q-btn
         to="/encontre-uma-obra"
         color="primary"
@@ -91,10 +112,19 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import statesList from 'src/utils/statesList.json';
 
 export default defineComponent({
   name: 'NewPublicWorks',
   setup() {
+    const image = ref(null);
+    const imageUrl = ref('');
+    const handleUpload = () => {
+      if (image.value) {
+        imageUrl.value = URL.createObjectURL(image.value);
+      }
+    };
+
     return {
       location: ref(''),
       name: ref(''),
@@ -104,8 +134,12 @@ export default defineComponent({
       startDate: ref(''),
       deadline: ref(''),
       budget: ref(''),
+      description: ref(''),
       categories: ['Mobilidade Urbana', 'Turismo', 'Infraestrutura'],
-      states: ['CE', 'PI', 'RJ'],
+      states: statesList,
+      image,
+      imageUrl,
+      handleUpload,
     };
   },
 });

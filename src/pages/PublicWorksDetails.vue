@@ -25,15 +25,25 @@
           nunc eget sapien.
         </p>
 
-        <h2 class="q-my-md">Dados da obra</h2>
+        <h2 class="q-mt-xl q-mb-md">Dados da obra</h2>
 
-        <div><span>Data inicial</span></div>
-        <div><span>Prazo original</span></div>
-        <div><span>Dias de atraso</span></div>
-        <div><span>Valor da obra</span></div>
-        <div><span>Valor gasto</span></div>
+        <div class="infoItem">
+          <span>Data inicial</span><span>{{ publicWorks.initialDate }}</span>
+        </div>
+        <div class="infoItem">
+          <span>Prazo original</span
+          ><span>
+            {{ new Date(publicWorks.originalDeadline).toLocaleDateString() }}
+          </span>
+        </div>
+        <div class="infoItem">
+          <span>Dias de atraso</span><span>{{ getDelay() }}</span>
+        </div>
+        <div class="infoItem">
+          <span>Valor da obra</span><span>{{ publicWorks.plannedCost }}</span>
+        </div>
 
-        <h2 class="q-my-md">Galeria</h2>
+        <h2 class="q-mt-xl q-mb-md">Galeria</h2>
         <div class="gallery">
           <q-img
             v-for="(img, index) of Array(4)"
@@ -43,9 +53,19 @@
           />
         </div>
 
-        <h2 class="q-my-md">Comentários</h2>
+        <h2 class="q-mt-xl q-mb-md">Comentários</h2>
         <div v-for="(comment, index) of comments" :key="index">
-          <h3>{{ comment.author }}</h3>
+          <div style="display: flex">
+            <q-img
+              alt="Imagem de usuário"
+              src="../assets/user.png"
+              width="40px"
+              height="40px"
+            />
+            <h3 style="margin: 0 0 0 1rem; align-self: center">
+              {{ comment.author }}
+            </h3>
+          </div>
           <p>{{ comment.text }}</p>
         </div>
       </div>
@@ -59,14 +79,22 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   name: 'PublicWorksDetails',
   setup() {
+    const originalDeadline = '2023-04-26';
+    const getDelay = () => {
+      const today = new Date();
+      const differenceInMilisec =
+        today.getTime() - new Date(originalDeadline).getTime();
+      return Math.ceil(differenceInMilisec / (1000 * 3600 * 24));
+    };
+
     return {
       publicWorks: ref({
         name: 'Rodovia 4º Anel Viário',
-        initialDate: 'Rodovia 4º Anel Viário',
-        originalDeadline: 'Rodovia 4º Anel Viário',
-        plannedCost: 'Rodovia 4º Anel Viário',
-        currentCost: 'Rodovia 4º Anel Viário',
+        initialDate: '10/08/2022',
+        originalDeadline,
+        plannedCost: 'R$ 36.450.000,00',
       }),
+      getDelay,
       comments: ref(
         Array(3).fill({
           author: 'José da Silva',
@@ -112,6 +140,13 @@ h2
 h3
   font-size: 1rem
   line-height: 1.5rem
+
+.infoItem
+  margin-bottom: 1rem
+
+.infoItem > span:first-child
+  display: inline-block
+  width: 8rem
 
 .gallery
   display: flex
