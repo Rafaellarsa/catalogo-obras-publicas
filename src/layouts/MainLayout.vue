@@ -11,14 +11,6 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-
-        <q-input
-          v-model="search"
-          placeholder="Pesquisar..."
-          class="q-mx-auto"
-          dense
-          outlined
-        />
       </q-toolbar>
     </q-header>
 
@@ -85,7 +77,6 @@ export default defineComponent({
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
-      search: ref(''),
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },

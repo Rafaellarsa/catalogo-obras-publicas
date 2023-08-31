@@ -2,6 +2,14 @@
   <q-page>
     <div style="max-width: 500px" class="q-pa-md q-mx-auto">
       <h1>Encontre uma obra</h1>
+      <q-input
+        v-model="search"
+        placeholder="Pesquisar..."
+        class="q-mx-auto"
+        dense
+        outlined
+      />
+
       <div v-for="(category, index) of publicWorks" :key="index">
         <h2>{{ category.title }}</h2>
 
@@ -35,6 +43,7 @@ export default defineComponent({
   name: 'FindPublicWorks',
   setup() {
     return {
+      search: ref(''),
       publicWorks: ref([
         {
           title: 'Por estado',
