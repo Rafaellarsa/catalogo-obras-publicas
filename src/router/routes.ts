@@ -26,20 +26,6 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/encontre-uma-obra-2',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/FindPublicWorks2.vue') },
-    ],
-  },
-  {
-    path: '/encontre-uma-obra-3',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/FindPublicWorks3.vue') },
-    ],
-  },
-  {
     path: '/obra-exemplo',
     component: () => import('layouts/PublicLayout.vue'),
     children: [

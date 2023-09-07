@@ -10,64 +10,115 @@
         outlined
       />
 
-      <div v-for="(category, index) of publicWorks" :key="index">
-        <h2>{{ category.title }}</h2>
-
-        <div style="display: flex">
-          <q-card
-            v-for="(item, index) of category.items"
-            :key="index"
-            class="card"
-            @click="$router.push('/obra-exemplo')"
-          >
-            <q-img
-              :ratio="5 / 8"
-              src="https://cdn.quasar.dev/img/parallax2.jpg"
-            >
-              <div class="absolute-bottom">
-                <div class="text-subtitle2">{{ item.subtitle }}</div>
-                <div class="text-h6">{{ item.title }}</div>
-              </div>
-            </q-img>
-          </q-card>
-        </div>
+      <div style="display: flex" class="q-my-md">
+        <q-btn
+          outline
+          color="secondary"
+          icon="filter_alt"
+          label="Filtros"
+          @click="filtersDialogVisibility = true"
+        />
+        <q-btn flat icon="close" label="Limpar filtros" class="q-ml-sm" />
       </div>
+
+      <div style="display: flex; flex-wrap: wrap" class="q-mb-md">
+        <q-chip outline color="primary" icon-right="close">Ceará</q-chip>
+        <q-chip outline color="primary" icon-right="close">Pernambuco</q-chip>
+        <q-chip outline color="primary" icon-right="close"
+          >Infraestrutura</q-chip
+        >
+      </div>
+
+      <q-card
+        v-for="(item, index) of publicWorks"
+        :key="index"
+        class="card q-mb-sm"
+        @click="$router.push('/obra-exemplo')"
+      >
+        <q-card-section horizontal>
+          <q-img
+            class="col-5"
+            width="100"
+            height="100"
+            src="https://cdn.quasar.dev/img/parallax2.jpg"
+          />
+
+          <q-card-section>
+            <div class="text-subtitle2">{{ item.category }}</div>
+            <div class="text-h6">{{ item.name }}</div>
+          </q-card-section>
+        </q-card-section>
+      </q-card>
     </div>
+
+    <q-dialog v-model="filtersDialogVisibility">
+      <q-card>
+        <q-card-section>
+          <div class="text-h5">Filtros</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <div class="text-h6">Categorias</div>
+          <q-option-group
+            v-model="category"
+            :options="categories"
+            color="secondary"
+            type="checkbox"
+          />
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <div class="text-h6">Estados</div>
+          <div style="max-height: 200px" class="scroll">
+            <q-option-group
+              v-model="state"
+              :options="states"
+              color="secondary"
+              type="checkbox"
+            />
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancelar" v-close-popup />
+          <q-btn flat label="Aplicar filtros" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import statesList from 'src/utils/statesList.json';
 
 export default defineComponent({
-  name: 'FindPublicWorks',
+  name: 'FindPublicWorks3',
   setup() {
     return {
+      filtersDialogVisibility: ref(false),
       search: ref(''),
+      category: ref([]),
+      categories: [
+        { value: 1, label: 'Mobilidade Urbana' },
+        { value: 2, label: 'Turismo' },
+        { value: 3, label: 'Infraestrutura' },
+      ],
+      state: ref([]),
+      states: statesList.map((item) => {
+        return { value: item, label: item };
+      }),
       publicWorks: ref([
         {
-          title: 'Por estado',
-          items: [
-            { title: 'Rio de Janeiro', subtitle: 'Estado' },
-            { title: 'Ceará', subtitle: 'Estado' },
-            { title: 'Rio Grande do Sul', subtitle: 'Estado' },
-          ],
+          name: "Avenida Omar O'Grady",
+          category: 'Mobilidade Urbana',
+          state: 'Rio de Janeiro',
         },
+        { name: 'Acquario do Ceará', category: 'Turismo', state: 'Ceará' },
         {
-          title: 'Por categoria',
-          items: [
-            { title: 'Mobilidade Urbana', subtitle: 'Categoria' },
-            { title: 'Turismo', subtitle: 'Categoria' },
-            { title: 'Infraestrutura', subtitle: 'Categoria' },
-          ],
-        },
-        {
-          title: 'Por obra',
-          items: [
-            { title: "Avenida Omar O'Grady", subtitle: 'Mobilidade Urbana' },
-            { title: 'Acquario do Ceará', subtitle: 'Turismo' },
-            { title: 'Esgoto', subtitle: 'Infraestrutura' },
-          ],
+          name: 'Esgoto',
+          category: 'Infraestrutura',
+          state: 'Rio Grande do Sul',
         },
       ]),
     };
