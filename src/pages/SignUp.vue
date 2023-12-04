@@ -1,6 +1,7 @@
 <template>
   <q-page class="row items-center justify-evenly">
     <div style="max-width: 500px">
+      <vertical-logo />
       <h1>Cadastre-se</h1>
       <q-input filled v-model="user" label="Nome de usuário" class="q-mb-sm" />
       <q-input filled v-model="email" label="E-mail" class="q-mb-sm" />
@@ -21,11 +22,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import VerticalLogo from 'src/components/VerticalLogo.vue';
 import PasswordInput from 'src/components/PasswordInput.vue';
 
 export default defineComponent({
   name: 'SignUp',
-  components: { PasswordInput },
+  components: { VerticalLogo, PasswordInput },
   setup() {
     return {
       user: ref(''),

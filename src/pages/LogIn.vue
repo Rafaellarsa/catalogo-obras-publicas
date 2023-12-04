@@ -1,6 +1,7 @@
 <template>
   <q-page class="row items-center justify-evenly">
     <div style="max-width: 500px">
+      <vertical-logo />
       <h1>Acesse sua conta</h1>
       <q-input
         filled
@@ -35,11 +36,12 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import VerticalLogo from 'src/components/VerticalLogo.vue';
 import PasswordInput from 'src/components/PasswordInput.vue';
 
 export default defineComponent({
   name: 'LogIn',
-  components: { PasswordInput },
+  components: { VerticalLogo, PasswordInput },
   setup() {
     return {
       user: ref(''),

@@ -11,6 +11,15 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
+        <q-btn flat dense class="q-ml-sm" to="/encontre-uma-obra">
+          <q-img
+            alt="Logo do sistema"
+            src="../assets/construction.png"
+            width="30px"
+            position="center"
+          />
+          <div class="app-title q-ml-sm">Tô de olho</div>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -88,4 +97,12 @@ export default defineComponent({
 <style lang="sass" scoped>
 .q-header
   background-color: white
+
+.app-title
+  font-family: 'Squada One', sans-serif
+  font-weight: 400
+  font-size: 1rem
+  letter-spacing: 0.1rem
+  color: $secondary
+  text-transform: uppercase
 </style>
