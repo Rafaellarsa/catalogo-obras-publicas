@@ -57,6 +57,21 @@
           </div>
           <p>{{ comment.text }}</p>
         </div>
+        <q-input
+          outlined
+          dense
+          dark
+          bottom-slots
+          counter
+          maxlength="140"
+          color="primary"
+          label="Novo comentário"
+          v-model="newComment"
+        >
+          <template v-slot:after>
+            <q-btn round dense flat color="primary" icon="send" />
+          </template>
+        </q-input>
       </div>
     </div>
   </q-page>
