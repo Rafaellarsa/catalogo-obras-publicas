@@ -10,23 +10,72 @@
         outlined
       />
 
-      <div style="display: flex" class="q-my-md">
+      <div style="display: flex" class="q-mt-md">
         <q-btn
           outline
+          dense
           color="secondary"
+          size="sm"
           icon="filter_alt"
           label="Filtros"
+          class="q-px-sm"
           @click="filtersDialogVisibility = true"
         />
-        <q-btn flat icon="close" label="Limpar filtros" class="q-ml-sm" />
+        <q-btn
+          v-if="activeStates.concat(activeCategories).length"
+          flat
+          dense
+          size="sm"
+          icon="close"
+          label="Limpar filtros"
+          class="q-ml-sm"
+          @click="clearFilters"
+        />
       </div>
 
       <div style="display: flex; flex-wrap: wrap" class="q-mb-md">
-        <q-chip outline color="primary" icon-right="close">Ceará</q-chip>
-        <q-chip outline color="primary" icon-right="close">Pernambuco</q-chip>
-        <q-chip outline color="primary" icon-right="close"
-          >Infraestrutura</q-chip
+        <q-chip
+          v-for="state in activeStates"
+          :key="state.value"
+          outline
+          color="primary"
+          size="sm"
+          class="q-ml-none q-pr-xs"
         >
+          {{ state.label }}
+          <q-btn
+            round
+            flat
+            size="xs"
+            icon="close"
+            @click="
+              activeStates = activeStates.filter(
+                ({ value }) => value !== state.value
+              )
+            "
+          />
+        </q-chip>
+        <q-chip
+          v-for="category in activeCategories"
+          :key="category.value"
+          outline
+          color="primary"
+          size="sm"
+          class="q-ml-none q-pr-xs"
+        >
+          {{ category.label }}
+          <q-btn
+            round
+            flat
+            size="xs"
+            icon="close"
+            @click="
+              activeCategories = activeCategories.filter(
+                ({ value }) => value !== category.value
+              )
+            "
+          />
+        </q-chip>
       </div>
 
       <q-card
@@ -51,63 +100,45 @@
       </q-card>
     </div>
 
-    <q-dialog v-model="filtersDialogVisibility">
-      <q-card>
-        <q-card-section>
-          <div class="text-h5">Filtros</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          <div class="text-h6">Categorias</div>
-          <q-option-group
-            v-model="category"
-            :options="categories"
-            color="secondary"
-            type="checkbox"
-          />
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          <div class="text-h6">Estados</div>
-          <div style="max-height: 200px" class="scroll">
-            <q-option-group
-              v-model="state"
-              :options="states"
-              color="secondary"
-              type="checkbox"
-            />
-          </div>
-        </q-card-section>
-
-        <q-card-actions align="right" class="text-primary">
-          <q-btn flat label="Cancelar" v-close-popup />
-          <q-btn flat label="Aplicar filtros" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+    <FiltersDialog
+      :visibility="filtersDialogVisibility"
+      :activeStates="activeStates"
+      :activeCategories="activeCategories"
+      @update-visibility="(value) => (filtersDialogVisibility = value)"
+      @set-filters="setFilters"
+    />
   </q-page>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import statesList from 'src/utils/statesList.json';
+import FiltersDialog from 'src/components/FiltersDialog.vue';
+
+declare interface Filter {
+  value: number | string;
+  label: string;
+}
 
 export default defineComponent({
-  name: 'FindPublicWorks3',
+  name: 'FindPublicWorks',
+  components: { FiltersDialog },
+  methods: {
+    setFilters(selectedCategories: Filter[], selectedStates: Filter[]) {
+      this.activeCategories = selectedCategories;
+      this.activeStates = selectedStates;
+      this.filtersDialogVisibility = false;
+    },
+    clearFilters() {
+      this.activeCategories = [];
+      this.activeStates = [];
+    },
+  },
   setup() {
     return {
       filtersDialogVisibility: ref(false),
       search: ref(''),
-      category: ref([]),
-      categories: [
-        { value: 1, label: 'Mobilidade Urbana' },
-        { value: 2, label: 'Turismo' },
-        { value: 3, label: 'Infraestrutura' },
-      ],
-      state: ref([]),
-      states: statesList.map((item) => {
-        return { value: item, label: item };
-      }),
+      activeStates: ref([] as Filter[]),
+      activeCategories: ref([] as Filter[]),
       publicWorks: ref([
         {
           name: "Avenida Omar O'Grady",

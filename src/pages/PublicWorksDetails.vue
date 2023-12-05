@@ -12,18 +12,7 @@
       <h1 class="page-title q-my-md">{{ publicWorks.name }}</h1>
 
       <div class="scrollable">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a
-          fermentum sem. Proin eleifend elementum pretium. Quisque egestas est a
-          ligula finibus gravida. Vivamus at scelerisque lorem. Fusce non
-          blandit arcu. Nunc elementum sed ipsum id ultrices. Curabitur luctus
-          ultrices sagittis. Aenean vel nunc ut leo tempor finibus id ac mi.
-          Etiam ullamcorper metus id augue aliquam vehicula. Ut id cursus
-          tellus. Morbi mollis est vel ex feugiat scelerisque. Nam scelerisque
-          varius nunc, at maximus elit viverra at. Duis convallis, mauris sed
-          varius scelerisque, ex nulla egestas tortor, nec pellentesque magna
-          nunc eget sapien.
-        </p>
+        <p>Colabore! Ajude a fiscalizar os gastos públicos com obras!</p>
 
         <h2 class="q-mt-xl q-mb-md">Dados da obra</h2>
 
@@ -101,6 +90,7 @@ export default defineComponent({
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce a fermentum sem.',
         })
       ),
+      newComment: ref(''),
     };
   },
 });
