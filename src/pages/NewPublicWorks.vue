@@ -7,10 +7,17 @@
         filled
         v-model="location"
         label="Selecionar localização"
-        class="q-mb-sm"
+        :loading="loadingGeolocation"
+        class="q-mb-lg"
+        hint='Clique no ícone para obter posição atual ou digite a latitude e a longitude no formato "-3.9999, -38.9999"'
       >
-        <template v-slot:append>
-          <q-icon name="place" />
+        <template v-slot:append v-if="!loadingGeolocation">
+          <q-icon
+            name="place"
+            color="primary"
+            class="cursor-pointer"
+            @click="getCurrentLocation"
+          />
         </template>
       </q-input>
 
@@ -44,7 +51,7 @@
         class="q-mb-sm"
       >
         <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
+          <q-icon name="event" class="cursor-pointer" color="primary">
             <q-popup-proxy transition-show="scale" transition-hide="scale">
               <q-date v-model="startDate" mask="DD/MM/YYYY">
                 <div class="row items-center justify-end">
@@ -63,7 +70,7 @@
         class="q-mb-sm"
       >
         <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
+          <q-icon name="event" class="cursor-pointer" color="primary">
             <q-popup-proxy transition-show="scale" transition-hide="scale">
               <q-date v-model="deadline" mask="DD/MM/YYYY">
                 <div class="row items-center justify-end">
@@ -124,7 +131,25 @@ export default defineComponent({
   methods: {
     onAddPublicWorks() {
       this.$router.push('/encontre-uma-obra');
-      this.showSuccessToast();
+      this.showToast('primary', 'Nova obra pública cadastrada com sucesso.');
+    },
+    getCurrentLocation() {
+      if (navigator.geolocation) {
+        this.loadingGeolocation = true;
+        navigator.geolocation.getCurrentPosition(
+          this.setPosition,
+          this.geolocationNotAvailable
+        );
+      }
+    },
+    setPosition(position: GeolocationPosition) {
+      this.location =
+        position?.coords?.latitude + ', ' + position?.coords?.longitude;
+      this.loadingGeolocation = false;
+    },
+    geolocationNotAvailable() {
+      this.showToast('secondary', 'Erro ao utilizar geolocalização.');
+      this.loadingGeolocation = false;
     },
   },
   setup() {
@@ -155,11 +180,12 @@ export default defineComponent({
       states: statesList,
       images,
       imageUrls,
+      loadingGeolocation: ref(false),
       handleUpload,
-      showSuccessToast() {
+      showToast(color: string, message: string) {
         $q.notify({
-          message: 'Nova obra pública cadastrada com sucesso.',
-          color: 'primary',
+          message,
+          color,
           actions: [
             {
               icon: 'close',
