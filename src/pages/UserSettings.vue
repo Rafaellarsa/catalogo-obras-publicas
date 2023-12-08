@@ -5,8 +5,8 @@
 
       <div class="profile-photo">
         <q-img
+          :src="profilePhotoUrl || getDefaultAvatarUrl()"
           alt="Imagem de usuário"
-          :src="profilePhotoUrl"
           width="100px"
           height="100px"
           position="center"
@@ -70,7 +70,7 @@ export default defineComponent({
     const $q = useQuasar();
     const fileRef = ref<QFile>() as Ref<QFile>;
     const uploadedPhoto = ref();
-    const profilePhotoUrl = ref('/assets/user.png');
+    const profilePhotoUrl = ref('');
 
     const chooseProfilePhoto = () => {
       fileRef.value.pickFiles();
@@ -80,7 +80,7 @@ export default defineComponent({
       if (uploadedPhoto.value) {
         profilePhotoUrl.value = URL.createObjectURL(uploadedPhoto.value);
       } else {
-        profilePhotoUrl.value = '/assets/user.png';
+        profilePhotoUrl.value = '';
       }
     };
 
@@ -105,6 +105,9 @@ export default defineComponent({
             },
           ],
         });
+      },
+      getDefaultAvatarUrl() {
+        return new URL('../assets/user.png', import.meta.url).href;
       },
     };
   },
