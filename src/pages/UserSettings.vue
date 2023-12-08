@@ -70,7 +70,7 @@ export default defineComponent({
     const $q = useQuasar();
     const fileRef = ref<QFile>() as Ref<QFile>;
     const uploadedPhoto = ref();
-    const profilePhotoUrl = ref('src/assets/user.png');
+    const profilePhotoUrl = ref('.../assets/user.png');
 
     const chooseProfilePhoto = () => {
       fileRef.value.pickFiles();
@@ -80,7 +80,7 @@ export default defineComponent({
       if (uploadedPhoto.value) {
         profilePhotoUrl.value = URL.createObjectURL(uploadedPhoto.value);
       } else {
-        profilePhotoUrl.value = 'src/assets/user.png';
+        profilePhotoUrl.value = '.../assets/user.png';
       }
     };
 
