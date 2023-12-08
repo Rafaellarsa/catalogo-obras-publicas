@@ -69,7 +69,15 @@
           v-model="newComment"
         >
           <template v-slot:after>
-            <q-btn round dense flat color="primary" icon="send" />
+            <q-btn
+              round
+              dense
+              flat
+              color="primary"
+              icon="send"
+              :disable="!newComment"
+              @click="addComment"
+            />
           </template>
         </q-input>
       </div>
@@ -82,6 +90,15 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'PublicWorksDetails',
+  methods: {
+    addComment() {
+      this.comments.push({
+        author: 'Usuário de Teste',
+        text: this.newComment,
+      });
+      this.newComment = '';
+    },
+  },
   setup() {
     const originalDeadline = '2023-04-26';
     const getDelay = () => {
