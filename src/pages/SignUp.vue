@@ -12,7 +12,12 @@
         label="Reescreva sua senha"
       />
 
-      <q-btn color="primary" label="Criar conta" class="full-width q-my-md" />
+      <q-btn
+        color="primary"
+        label="Criar conta"
+        class="full-width q-my-md"
+        @click="onSignUp"
+      />
       <p class="text-center">
         <router-link to="/">Voltar</router-link>
       </p>
@@ -22,18 +27,40 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { useQuasar } from 'quasar';
 import VerticalLogo from 'src/components/VerticalLogo.vue';
 import PasswordInput from 'src/components/PasswordInput.vue';
 
 export default defineComponent({
   name: 'SignUp',
   components: { VerticalLogo, PasswordInput },
+  methods: {
+    onSignUp() {
+      this.$router.push('/');
+      this.showSuccessToast();
+    },
+  },
   setup() {
+    const $q = useQuasar();
+
     return {
       user: ref(''),
       email: ref(''),
       password: ref(''),
       passwordConfirmation: ref(''),
+      showSuccessToast() {
+        $q.notify({
+          message: 'Conta criada com sucesso.',
+          color: 'primary',
+          actions: [
+            {
+              icon: 'close',
+              color: 'white',
+              round: true,
+            },
+          ],
+        });
+      },
     };
   },
 });

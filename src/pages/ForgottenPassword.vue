@@ -13,6 +13,7 @@
         color="primary"
         label="Recuperar senha"
         class="full-width q-my-md"
+        @click="onPasswordRecovery"
       />
 
       <p class="text-center">
@@ -24,14 +25,36 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { useQuasar } from 'quasar';
 import VerticalLogo from 'src/components/VerticalLogo.vue';
 
 export default defineComponent({
   name: 'LogIn',
   components: { VerticalLogo },
+  methods: {
+    onPasswordRecovery() {
+      this.$router.push('/');
+      this.showSuccessToast();
+    },
+  },
   setup() {
+    const $q = useQuasar();
+
     return {
       user: ref(''),
+      showSuccessToast() {
+        $q.notify({
+          message: 'E-mail de recuperação de senha enviado.',
+          color: 'primary',
+          actions: [
+            {
+              icon: 'close',
+              color: 'white',
+              round: true,
+            },
+          ],
+        });
+      },
     };
   },
 });

@@ -36,6 +36,7 @@
         color="primary"
         label="Salvar alterações"
         class="full-width q-mt-md"
+        @click="onSaveChanges"
       />
     </div>
   </q-page>
@@ -43,16 +44,38 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { useQuasar } from 'quasar';
 import PasswordInput from 'src/components/PasswordInput.vue';
 
 export default defineComponent({
   name: 'UserSettings',
   components: { PasswordInput },
+  methods: {
+    onSaveChanges() {
+      this.$router.push('/encontre-uma-obra');
+      this.showSuccessToast();
+    },
+  },
   setup() {
+    const $q = useQuasar();
+
     return {
       password: ref(''),
       newPassword: ref(''),
       newPasswordConfirmation: ref(''),
+      showSuccessToast() {
+        $q.notify({
+          message: 'Informações da conta atualizadas com sucesso.',
+          color: 'primary',
+          actions: [
+            {
+              icon: 'close',
+              color: 'white',
+              round: true,
+            },
+          ],
+        });
+      },
     };
   },
 });

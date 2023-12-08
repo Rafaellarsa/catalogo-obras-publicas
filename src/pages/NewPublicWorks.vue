@@ -101,10 +101,10 @@
       />
 
       <q-btn
-        to="/encontre-uma-obra"
         color="primary"
         label="Cadastrar Obra"
         class="full-width q-mb-md"
+        @click="onAddPublicWorks"
       />
     </div>
   </q-page>
@@ -112,11 +112,20 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { useQuasar } from 'quasar';
 import statesList from 'src/utils/statesList.json';
 
 export default defineComponent({
   name: 'NewPublicWorks',
+  methods: {
+    onAddPublicWorks() {
+      this.$router.push('/encontre-uma-obra');
+      this.showSuccessToast();
+    },
+  },
   setup() {
+    const $q = useQuasar();
+
     const image = ref(null);
     const imageUrl = ref('');
     const handleUpload = () => {
@@ -140,6 +149,19 @@ export default defineComponent({
       image,
       imageUrl,
       handleUpload,
+      showSuccessToast() {
+        $q.notify({
+          message: 'Nova obra pública cadastrada com sucesso.',
+          color: 'primary',
+          actions: [
+            {
+              icon: 'close',
+              color: 'white',
+              round: true,
+            },
+          ],
+        });
+      },
     };
   },
 });
