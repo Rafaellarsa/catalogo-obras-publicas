@@ -81,13 +81,17 @@
 
       <q-file
         filled
-        v-model="image"
+        multiple
+        v-model="images"
         label="Adicione imagens..."
+        accept=".jpg, image/*"
         @update:model-value="handleUpload()"
       />
 
       <q-img
-        :src="imageUrl"
+        v-for="(url, index) of imageUrls"
+        :key="index"
+        :src="url"
         spinner-color="white"
         style="height: 60px; max-width: 60px"
       />
@@ -97,7 +101,7 @@
         v-model="description"
         label="Descrição"
         type="textarea"
-        class="q-mb-md"
+        class="q-my-md"
       />
 
       <q-btn
@@ -126,12 +130,15 @@ export default defineComponent({
   setup() {
     const $q = useQuasar();
 
-    const image = ref(null);
-    const imageUrl = ref('');
+    const images = ref([]);
+    const imageUrls = ref([] as (string | undefined)[]);
     const handleUpload = () => {
-      if (image.value) {
-        imageUrl.value = URL.createObjectURL(image.value);
-      }
+      const newImageUrls = images.value.map((image) => {
+        if (image) {
+          return URL.createObjectURL(image);
+        }
+      });
+      imageUrls.value = newImageUrls.filter((value) => value != undefined);
     };
 
     return {
@@ -146,8 +153,8 @@ export default defineComponent({
       description: ref(''),
       categories: ['Mobilidade Urbana', 'Turismo', 'Infraestrutura'],
       states: statesList,
-      image,
-      imageUrl,
+      images,
+      imageUrls,
       handleUpload,
       showSuccessToast() {
         $q.notify({

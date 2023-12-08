@@ -6,8 +6,9 @@
       <div class="profile-photo">
         <q-img
           alt="Imagem de usuário"
-          src="../assets/user.png"
+          :src="profilePhotoUrl"
           width="100px"
+          height="100px"
           position="center"
         />
         <q-btn
@@ -16,10 +17,18 @@
           size="sm"
           icon="edit"
           class="photo-edit-btn"
+          @click="chooseProfilePhoto"
+        />
+
+        <q-file
+          ref="fileRef"
+          v-model="uploadedPhoto"
+          style="display: none"
+          @update:model-value="handlePhotoUpload"
         />
       </div>
 
-      <p class="text-center q-mt-md">Fulano</p>
+      <p class="text-center q-mt-md">Usuário de Teste</p>
       <p class="text-center">email@email.com</p>
 
       <password-input v-model="password" />
@@ -43,8 +52,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, Ref } from 'vue';
 import { useQuasar } from 'quasar';
+import { QFile } from 'quasar';
 import PasswordInput from 'src/components/PasswordInput.vue';
 
 export default defineComponent({
@@ -58,11 +68,31 @@ export default defineComponent({
   },
   setup() {
     const $q = useQuasar();
+    const fileRef = ref<QFile>() as Ref<QFile>;
+    const uploadedPhoto = ref();
+    const profilePhotoUrl = ref('src/assets/user.png');
+
+    const chooseProfilePhoto = () => {
+      fileRef.value.pickFiles();
+    };
+
+    const handlePhotoUpload = () => {
+      if (uploadedPhoto.value) {
+        profilePhotoUrl.value = URL.createObjectURL(uploadedPhoto.value);
+      } else {
+        profilePhotoUrl.value = 'src/assets/user.png';
+      }
+    };
 
     return {
       password: ref(''),
       newPassword: ref(''),
       newPasswordConfirmation: ref(''),
+      profilePhotoUrl,
+      uploadedPhoto,
+      fileRef,
+      chooseProfilePhoto,
+      handlePhotoUpload,
       showSuccessToast() {
         $q.notify({
           message: 'Informações da conta atualizadas com sucesso.',
