@@ -51,7 +51,8 @@
             @click="
               activeStates = activeStates.filter(
                 ({ value }) => value !== state.value
-              )
+              );
+              updateList();
             "
           />
         </q-chip>
@@ -72,7 +73,8 @@
             @click="
               activeCategories = activeCategories.filter(
                 ({ value }) => value !== category.value
-              )
+              );
+              updateList();
             "
           />
         </q-chip>
@@ -95,6 +97,7 @@
           <q-card-section>
             <div class="text-subtitle2">{{ item.category }}</div>
             <div class="text-h6">{{ item.name }}</div>
+            <div class="text-subtitle2">{{ item.state }}</div>
           </q-card-section>
         </q-card-section>
       </q-card>
@@ -119,18 +122,84 @@ declare interface Filter {
   label: string;
 }
 
+declare interface PublicWorks {
+  name: string;
+  category: string;
+  state: string;
+}
+
+const mockedPublicWorks = [
+  {
+    name: "Avenida Omar O'Grady",
+    category: 'Mobilidade Urbana',
+    state: 'RJ',
+  },
+  { name: 'Acquario do Ceará', category: 'Turismo', state: 'CE' },
+  {
+    name: 'Esgoto',
+    category: 'Infraestrutura',
+    state: 'RS',
+  },
+  {
+    name: 'Estádio',
+    category: 'Turismo',
+    state: 'AM',
+  },
+  {
+    name: 'Rodovia',
+    category: 'Mobilidade Urbana',
+    state: 'MS',
+  },
+  {
+    name: 'Porto',
+    category: 'Infraestrutura',
+    state: 'RJ',
+  },
+];
+
 export default defineComponent({
   name: 'FindPublicWorks',
   components: { FiltersDialog },
+  watch: {
+    search() {
+      this.updateList();
+    },
+  },
   methods: {
     setFilters(selectedCategories: Filter[], selectedStates: Filter[]) {
       this.activeCategories = selectedCategories;
       this.activeStates = selectedStates;
       this.filtersDialogVisibility = false;
+      this.updateList();
     },
     clearFilters() {
       this.activeCategories = [];
       this.activeStates = [];
+      this.updateList();
+    },
+    updateList() {
+      let updatedPublicWorks: PublicWorks[] = JSON.parse(
+        JSON.stringify(mockedPublicWorks)
+      );
+      if (this.search.length) {
+        updatedPublicWorks = updatedPublicWorks.filter((publicWorks) =>
+          publicWorks.name.toUpperCase().includes(this.search.toUpperCase())
+        );
+      }
+      if (this.activeCategories.length) {
+        updatedPublicWorks = updatedPublicWorks.filter((publicWorks) =>
+          this.activeCategories.some(
+            (category) => category.label == publicWorks.category
+          )
+        );
+      }
+      if (this.activeStates.length) {
+        updatedPublicWorks = updatedPublicWorks.filter((publicWorks) =>
+          this.activeStates.some((state) => state.value == publicWorks.state)
+        );
+      }
+
+      this.publicWorks = updatedPublicWorks;
     },
   },
   setup() {
@@ -139,19 +208,7 @@ export default defineComponent({
       search: ref(''),
       activeStates: ref([] as Filter[]),
       activeCategories: ref([] as Filter[]),
-      publicWorks: ref([
-        {
-          name: "Avenida Omar O'Grady",
-          category: 'Mobilidade Urbana',
-          state: 'Rio de Janeiro',
-        },
-        { name: 'Acquario do Ceará', category: 'Turismo', state: 'Ceará' },
-        {
-          name: 'Esgoto',
-          category: 'Infraestrutura',
-          state: 'Rio Grande do Sul',
-        },
-      ]),
+      publicWorks: ref(mockedPublicWorks),
     };
   },
 });
