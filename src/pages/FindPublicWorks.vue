@@ -80,6 +80,9 @@
         </q-chip>
       </div>
 
+      <div v-if="!publicWorks.length" class="text-h7 text-center">
+        Não há obras com os filtros selecionados.
+      </div>
       <q-card
         v-for="(item, index) of publicWorks"
         :key="index"
